@@ -10,6 +10,9 @@ Our work is based on EpicFlow: Edge-Preserving Interpolation of Correspondences 
 ## Disclaimer
 This project is developed as part of the requirements for a [software engineering final project](http://projects.jce.ac.il/moodle/login/index.php) at the software engineering department - [Azrieli College of Engineering](http://www.jce.ac.il/), Jerusalem, Israel.
 
+## Calendar
+[Project Calendar](https://calendar.google.com/calendar/embed?src=jdg4vvngq84llmrqm994it5ceo%40group.calendar.google.com&ctz=Asia/Jerusalem)
+
 ##Credits
 @inproceedings{revaud:hal-01142656,
   TITLE = {{EpicFlow: Edge-Preserving Interpolation of Correspondences for Optical Flow}},
