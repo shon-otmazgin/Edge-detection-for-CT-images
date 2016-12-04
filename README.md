@@ -6,7 +6,7 @@ In the begining we will focus on one part and later on we will expand it the oth
 Our work is based on EpicFlow: Edge-Preserving Interpolation of Correspondences for Optical Flow. 
 
 ## Disclaimer
-This project is developed as part of the requirements for a [software engineering course](https://github.com/jce-il/se-class/wiki) at the software engineering department - [Azrieli College of Engineering](http://www.jce.ac.il/), Jerusalem, Israel.
+This project is developed as part of the requirements for a [software engineering final project](http://projects.jce.ac.il/moodle/login/index.php) at the software engineering department - [Azrieli College of Engineering](http://www.jce.ac.il/), Jerusalem, Israel.
 
 Please visit our wiki for further project info: 
 
