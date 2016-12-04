@@ -22,4 +22,4 @@ Please visit our wiki for further project info:
 
 ### Project Documents
 
-### [Project Proposal]()
+### [Project Proposal](https://github.com/shon-otmazgin/Optical-Flow-on-CT-images/blob/master/Project%20documentation/Project%20Proposal.docx)
