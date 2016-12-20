@@ -1,4 +1,7 @@
+tic;
+niiStruct = load_untouch_nii_gzip('10000019_1_CT_wb.nii.gz');
 
+%{
 vidReader = VideoReader('lipVid.avi');
 
 opticFlow = opticalFlowLK('NoiseThreshold',0.009);
@@ -14,3 +17,5 @@ while hasFrame(vidReader)
     plot(flow,'DecimationFactor',[5 5],'ScaleFactor',10)
     hold off
 end
+%}
+toc
