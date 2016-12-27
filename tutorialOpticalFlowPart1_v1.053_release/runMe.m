@@ -4,13 +4,13 @@ clear in;
 
 %% argument 'movieType'
 % The source of video to process. 
- in.movieType = 'synthetic';    % generate synthetic video. 
+ in.movieType = 'test.avi';    % generate synthetic video. 
 % in.movieType = 'lipVid.avi'; % assumes a file 'LipVid.avi' in current folder. 
                                % Variable framerate videos not supported
 % in.movieType = 'GroundTruthData';  % A folder containing video previously saved with 
                                % the toolbox
 % in.movieType =  'camera';     % assumes a camera available in the system. 
-                               % if many cameras connected, use "in.camID" to choose 
+                               % if many cameras connected, use "in.camID" to choose                      
 
 %% argument 'method'     
 %  optical flow or visualization method  %%%

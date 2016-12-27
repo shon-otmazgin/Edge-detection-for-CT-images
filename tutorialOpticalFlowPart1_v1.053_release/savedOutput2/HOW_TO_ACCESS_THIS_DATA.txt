@@ -1,0 +1,40 @@
+This folder(originally called 'savedOutput2'), was created to save data
+generated with Stefan Karlsson's and Josef Bigun's OPTICAL FLOW TOOLBOX. 
+ 
+The toolbox is in Matlab, is free for non-commercial use, and can be downloaded here: 
+http://www.mathworks.com/matlabcentral/fileexchange/44400-tutorial-and-toolbox-on-real-time-optical-flow
+
+To view the data: in main folder of the toolbox(in Matlab), type "flowPlayBack(nameOfDir)", where nameOfDir
+is the name of the directory you have found these files. If they are in the original location, then type:
+
+flowPlayBack('savedOutput2');
+
+To access data: the first frame of the saved data:
+
+[im, u, v, macroDat] = getSavedFlow(1, nameOfDir);
+
+where "im" is the grayscale image, "u" and "v" are the component images of the flow, and "macroDat" contains a description of the data
+
+The n-th frame is thereafter accessed as:
+
+[im, u, v] = getSavedFlow(n);
+
+you can also quickly access succesive frames without giving frame number:
+
+[im, u, v] = getSavedFlow();
+
+
+   EXAMPLE 1: display the saved video
+
+[im, u, v, macroDat] = getSavedFlow(1, 'savedOutput2');
+hIm = imagesc(im,[0 255]);
+colormap gray; axis image; axis off;
+for fr = 2:macroDat.nofFrames 
+  [im, u, v] = getSavedFlow();
+  set(hIm,  'CData' ,im);
+  pause(1/15);
+end
+clear getSavedFlow;
+
+
+   EXAMPLE 2:  Open the code for function "flowPlayBack.m", it is in the folder "HelperFunctions"
