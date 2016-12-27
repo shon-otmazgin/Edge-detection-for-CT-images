@@ -25,3 +25,55 @@ I = imread('peppers.png');
 tic, E=edgesDetect(I,model); toc
 figure(1); im(I); figure(2); im(1-E);
 
+% create the EDGES.
+%{
+workingDir = 'test';
+imageNames = dir(fullfile(workingDir,'*.png'));
+imageNames = {imageNames.name}';
+a = size(imageNames);
+length = a(1);
+tic;
+for ii = 1:length
+   img = imread(fullfile(workingDir,imageNames{ii}));
+   E=edgesDetect(img,model);
+   filename1 = [sprintf('%03d',ii) '.png'];
+   fullname1 = fullfile(workingDir,'edges\1',filename1);
+   filename2 = [sprintf('%03d',ii) '.png'];
+   fullname2 = fullfile(workingDir,'edges\2',filename2);
+   imwrite(1-E,fullname1);    % Write out to a JPEG file (img1.jpg, img2.jpg, etc.)
+   imwrite(E,fullname2);    % Write out to a JPEG file (img1.jpg, img2.jpg, etc.)
+end
+toc
+%}
+
+%create Video edges from the images
+%{
+workingDir = 'test';
+imageNames1 = dir(fullfile(workingDir,'edges/1','*.png'));
+imageNames1 = {imageNames1.name}';
+
+imageNames2 = dir(fullfile(workingDir,'edges/2','*.png'));
+imageNames2 = {imageNames2.name}';
+
+a = size(imageNames1);
+length = a(1);
+
+outputVideo1 = VideoWriter(fullfile(workingDir,'1.avi'));
+outputVideo1.FrameRate = 5;
+open(outputVideo1);
+outputVideo2 = VideoWriter(fullfile(workingDir,'2.avi'));
+outputVideo2.FrameRate = 5;
+open(outputVideo2);
+tic;
+for ii = 1:length
+   img = imread(fullfile(workingDir,'edges\1',imageNames1{ii}));
+   writeVideo(outputVideo1,img);
+   
+   img = imread(fullfile(workingDir,'edges\2',imageNames2{ii}));
+   writeVideo(outputVideo2,img);
+end
+toc
+close(outputVideo1)
+close(outputVideo2)
+
+%}
