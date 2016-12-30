@@ -1,41 +1,20 @@
-tic;
-%niiStruct = load_untouch_nii_gzip('10000067_1_CT_wb.nii.gz');
-ct_img = niiStruct.img;
-
-vidReader = VideoReader('test.avi');
-
-%opticFlow = opticalFlowLK('NoiseThreshold',0.009);
-opticFlow = opticalFlowHS;
-
-while hasFrame(vidReader)
-    frameRGB = readFrame(vidReader);
-    frameGray = rgb2gray(frameRGB);
-
-    flow = estimateFlow(opticFlow,frameGray);
-
-    imshow(frameRGB)
-    hold on
-    plot(flow,'DecimationFactor',[5 5],'ScaleFactor',25)
-    hold off
-end
-
-
 % Video creator
-%{
-workingDir = 'test';
-imageNames = dir(fullfile(workingDir,'*.png'));
+tic;
+
+workingDir = 'test\edges';
+imageNames = dir(fullfile(workingDir,'*.jpg'));
 imageNames = {imageNames.name}';
 a = size(imageNames);
 length = a(1);
 
-outputVideo = VideoWriter(fullfile(workingDir,'shuttle_out.avi'));
+outputVideo = VideoWriter(fullfile(workingDir,'58_edges.avi'));
+outputVideo.FrameRate = 5;  % Default 30
 open(outputVideo);
 
-for ii = 1:length
+for ii = 200:length
    img = imread(fullfile(workingDir,imageNames{ii}));
    writeVideo(outputVideo,img);
 end
 close(outputVideo)
-%}
 
 toc

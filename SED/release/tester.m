@@ -14,18 +14,18 @@ for i=1:z
     segmentation = segMat(:,:,i);
     v = any(segmentation);
     if any(v) ~= 0
-        groundTruth = cell(1 , 7); 
+        groundTruth = cell(1 , 1); 
         [~, threshold] = edge(segmentation, 'sobel');
         fudgeFactor = .5;
         boundaries = edge(segmentation,'sobel', threshold * fudgeFactor); 
-        for j=1:7
+        for j=1:1
             groundTruth{1, j}.Segmentation = segmentation;
             groundTruth{1, j}.Boundaries = boundaries;
         end
-        img.groundTruth = groundTruth;
+        %img.groundTruth = groundTruth;
         filename = [sprintf('%03d',i) '.mat'];
         fullname = fullfile(workingDir,'groundTruth\train', filename);
-        save(fullname,'img');
+        save(fullname,'groundTruth');
         filename = [sprintf('%03d',i) '.jpg'];
         fullname = fullfile(workingDir,'images\train', filename);
         imwrite(scanMat(:,:,i) ,fullname);

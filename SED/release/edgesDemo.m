@@ -21,59 +21,40 @@ model.opts.nms=0;                 % set to true to enable nms
 if(0), edgesEval( model, 'show',1, 'name','' ); end
 
 %% detect edge and visualize results
+%{
 I = imread('peppers.png');
 tic, E=edgesDetect(I,model); toc
 figure(1); im(I); figure(2); im(1-E);
-
-% create the EDGES.
+%}
+%%
 %{
+CTscan = load_untouch_nii_gzip('10000019_1_CT_wb.nii.gz');
+
+scanMat = CTscan.img;
+z = size(scanMat,3);
+tic
 workingDir = 'test';
-imageNames = dir(fullfile(workingDir,'*.png'));
+for i=1:z
+    filename = [sprintf('%03d',i) '.jpg'];
+    fullname = fullfile(workingDir, filename);
+    imwrite(scanMat(:,:,i) ,fullname);
+end
+toc;
+%}
+%%
+workingDir = 'test';
+imageNames = dir(fullfile(workingDir,'*.jpg'));
 imageNames = {imageNames.name}';
 a = size(imageNames);
 length = a(1);
 tic;
-for ii = 1:length
-   img = imread(fullfile(workingDir,imageNames{ii}));
-   E=edgesDetect(img,model);
-   filename1 = [sprintf('%03d',ii) '.png'];
-   fullname1 = fullfile(workingDir,'edges\1',filename1);
-   filename2 = [sprintf('%03d',ii) '.png'];
-   fullname2 = fullfile(workingDir,'edges\2',filename2);
-   imwrite(1-E,fullname1);    % Write out to a JPEG file (img1.jpg, img2.jpg, etc.)
-   imwrite(E,fullname2);    % Write out to a JPEG file (img1.jpg, img2.jpg, etc.)
+for i=1:length
+    I = imread(fullfile(workingDir,imageNames{i}));
+    I = cat(3, I, I, I);
+    E=edgesDetect(I,model);
+    filename = [sprintf('%03d',i) '.jpg'];
+    fullname = fullfile(workingDir,'edges', filename);
+    imwrite(1-E ,fullname);
 end
 toc
-%}
 
-%create Video edges from the images
-%{
-workingDir = 'test';
-imageNames1 = dir(fullfile(workingDir,'edges/1','*.png'));
-imageNames1 = {imageNames1.name}';
-
-imageNames2 = dir(fullfile(workingDir,'edges/2','*.png'));
-imageNames2 = {imageNames2.name}';
-
-a = size(imageNames1);
-length = a(1);
-
-outputVideo1 = VideoWriter(fullfile(workingDir,'1.avi'));
-outputVideo1.FrameRate = 5;
-open(outputVideo1);
-outputVideo2 = VideoWriter(fullfile(workingDir,'2.avi'));
-outputVideo2.FrameRate = 5;
-open(outputVideo2);
-tic;
-for ii = 1:length
-   img = imread(fullfile(workingDir,'edges\1',imageNames1{ii}));
-   writeVideo(outputVideo1,img);
-   
-   img = imread(fullfile(workingDir,'edges\2',imageNames2{ii}));
-   writeVideo(outputVideo2,img);
-end
-toc
-close(outputVideo1)
-close(outputVideo2)
-
-%}
