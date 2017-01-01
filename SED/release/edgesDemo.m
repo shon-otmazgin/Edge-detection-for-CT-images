@@ -42,6 +42,32 @@ end
 toc;
 %}
 %%
+ 
+tic
+workingDir = 'test\edges';
+imageNames = dir(fullfile(workingDir,'*.jpg'));
+imageNames = {imageNames.name}';
+a = size(imageNames);
+length = a(1);
+
+for i=1:length
+    I = imread(fullfile(workingDir,imageNames{i}));
+    %I = cat(3, I, I, I);
+    %E=edgesDetect(I,model);
+    
+    E =  edge(I, 'Sobel');
+    %[~, threshold] = edge(I, 'Canny');
+    %fudgeFactor = .5;
+    %boundaries = edge(I,'Canny', threshold * fudgeFactor);
+    
+    filename = [sprintf('%03d',i) '.jpg'];
+    fullname = fullfile(workingDir,'edges2', filename);
+    imwrite(1-E ,fullname);
+end
+toc
+%{
+toc;
+
 workingDir = 'test';
 imageNames = dir(fullfile(workingDir,'*.jpg'));
 imageNames = {imageNames.name}';
@@ -57,4 +83,4 @@ for i=1:length
     imwrite(1-E ,fullname);
 end
 toc
-
+%}
