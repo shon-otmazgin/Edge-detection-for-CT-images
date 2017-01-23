@@ -1,4 +1,4 @@
-function [ ] = createCTslides( scan_name )
+function [ ] = createCTslides( scan_name, folder)
 %UNTITLED Summary of this function goes here
 %   the function is getting CT scan name and serach it on 'Volumes' folder.
 %   once the scan it found, the function create slides from the scan and
@@ -7,7 +7,7 @@ function [ ] = createCTslides( scan_name )
 
     scanMat = CTscan.img;
     z = size(scanMat,3);
-    workingDir = 'slides';
+    workingDir = folder;
     for i=1:z
         filename = [sprintf('%03d',i) '.jpg'];
         fullname = fullfile(workingDir, filename);

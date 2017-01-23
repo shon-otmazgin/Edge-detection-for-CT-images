@@ -26,51 +26,35 @@ I = imread('peppers.png');
 tic, E=edgesDetect(I,model); toc
 figure(1); im(I); figure(2); im(1-E);
 %}
-%%
-tic
-createCTslides('10000019_1_CT_wb.nii.gz');
-toc;
+%% creating the slides of CT scan.
 
-%%
- 
-tic
-workingDir = 'test\edges';
-imageNames = dir(fullfile(workingDir,'*.jpg'));
-imageNames = {imageNames.name}';
-a = size(imageNames);
-length = a(1);
-
-for i=1:length
-    I = imread(fullfile(workingDir,imageNames{i}));
-    %I = cat(3, I, I, I);
-    %E=edgesDetect(I,model);
-    
-    E =  edge(I, 'Sobel');
-    %[~, threshold] = edge(I, 'Canny');
-    %fudgeFactor = .5;
-    %boundaries = edge(I,'Canny', threshold * fudgeFactor);
-    
-    filename = [sprintf('%03d',i) '.jpg'];
-    fullname = fullfile(workingDir,'edges2', filename);
-    imwrite(1-E ,fullname);
-end
-toc
-%{
-toc;
-
-workingDir = 'test';
-imageNames = dir(fullfile(workingDir,'*.jpg'));
-imageNames = {imageNames.name}';
-a = size(imageNames);
-length = a(1);
 tic;
+workingDir = 'prototype\slides';
+createCTslides('10000019_1_CT_wb.nii.gz' , workingDir);
+toc
+
+%% evaluate SED forest algoritem on the slides
+ 
+tic;
+workingDir = 'prototype\slides';
+imageNames = dir(fullfile(workingDir,'*.jpg'));
+imageNames = {imageNames.name}';
+a = size(imageNames);
+length = a(1);
+
 for i=1:length
     I = imread(fullfile(workingDir,imageNames{i}));
     I = cat(3, I, I, I);
     E=edgesDetect(I,model);
     filename = [sprintf('%03d',i) '.jpg'];
-    fullname = fullfile(workingDir,'edges', filename);
-    imwrite(1-E ,fullname);
+    fullname = fullfile(workingDir,'results\SED', filename);
+    imwrite(1-E ,fullname);  
 end
 toc
-%}
+%% output a video file.
+
+tic;
+videoName = 'SED.avi';
+workingDir = 'prototype\slides\results\SED';
+createVideo(workingDir , videoName);
+toc
