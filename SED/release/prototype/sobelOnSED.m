@@ -1,26 +1,29 @@
+function [ sobelOnSEDseg ] = createSEDsegmentation( sedSeg ,folder )
+%UNTITLED3 Summary of this function goes here
+%   Detailed explanation goes here
 %% evaluate Sobel algoritem on the SED slides
 
-tic
-workingDir = 'prototype\slides\results\SED';
-resultSobelDir = 'prototype\slides\results\SED + Sobel';
-imageNames = dir(fullfile(workingDir,'*.jpg'));
-imageNames = {imageNames.name}';
-a = size(imageNames);
-length = a(1);
+    workingDir = folder;
+    workingDir = fullfile(workingDir,'SED');
+    imageNames = dir(fullfile(workingDir,'*.png'));
+    imageNames = {imageNames.name}';
+    a = size(imageNames);
+    length = a(1);
+    
+    workingDir = folder;
+    workingDir = fullfile(workingDir,'SobelOnSED');
+    mkdir(workingDir);   %create the directory
 
-for i=1:length
-    I = imread(fullfile(workingDir,imageNames{i}));
-    E =  edge(I, 'Sobel');
-    filename = [sprintf('%03d',i) '.jpg'];
-    fullname = fullfile(resultSobelDir, filename);
-    imwrite(1-E ,fullname);
+    for i=1:length
+      
+        I = sedSeg(:,:,i);
+        E =  edge(I, 'Sobel');
+        E = im2single(E);
+        sedSeg(:,:,i) = E;
+        filename = [sprintf('%03d',i) '.png'];
+        fullname = fullfile(workingDir, filename);
+        imwrite(E ,fullname);  
+    end
+    sobelOnSEDseg = sedSeg;
+    
 end
-toc;
-
-%% output a video file.
-
-tic;
-videoName = 'SED + sobel.avi';
-workingDir = 'prototype\slides\results\SED + Sobel';
-createVideo(workingDir , videoName);
-toc
