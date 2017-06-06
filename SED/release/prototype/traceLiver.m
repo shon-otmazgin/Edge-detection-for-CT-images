@@ -42,27 +42,6 @@ function [ finalSeg ] = traceLiver( segMat ,slide ,stratFrame, endFrame, GTframe
         nextSlide(nextSlide == 0 ) = 1;
         nextSlide(nextSlide == 255 ) = 0;
         
-        %save the segmentation
-        
-        [B,L] = bwboundaries(bw,'noholes');
-        if length(B) ~= 0
-            boundary = B{1};
-
-            z = length(boundary);
-            mat = zeros(size(bw));
-            for iii=1:z
-                mat(int16(boundary(iii,1)), int16(boundary(iii,2)))= 1; 
-            end
-            bw = imfill(mat, 'holes');    
-        else
-            bw = 0;
-            bw = im2single(bw);
-            segMat(:,:,ii) = bw;
-            for iiii=ii-1:-1:stratFrame
-                segMat(:,:,iiii) = 0;
-            end
-            break;
-        end
         
         bw = im2single(bw);
         segMat(:,:,ii) = bw;
@@ -101,27 +80,6 @@ function [ finalSeg ] = traceLiver( segMat ,slide ,stratFrame, endFrame, GTframe
         nextSlide(nextSlide == 0 ) = 1;
         nextSlide(nextSlide == 255 ) = 0;
         
-        
-        %save the segmentation
-        [B,L] = bwboundaries(bw,'noholes');
-        if length(B) ~= 0
-            boundary = B{1};
-
-            z = length(boundary);
-            mat = zeros(size(bw));
-            for iii=1:z
-                mat(int16(boundary(iii,1)), int16(boundary(iii,2)))= 1; 
-            end
-            bw = imfill(mat, 'holes');    
-        else
-            bw = 0;
-            bw = im2single(bw);
-            segMat(:,:,ii) = bw;
-            for iiii=ii+1:-1:endFrame
-                segMat(:,:,iiii) = 0;
-            end
-            break;
-        end  
         
         bw = im2single(bw);
         segMat(:,:,ii) = bw;
