@@ -24,4 +24,40 @@ end
 clearvars CTscan
 toc
 
+%% creating the SED segmentation of CT scan.
+tic
+disp('evaluating SED segmantation on scans...');
+for ii=1:length(items)
+    itemFolderName = strsplit(strjoin(items(ii)),'.');
+    workingDir = fullfile(rootDir,itemFolderName(1));
+    workingDir = strjoin(workingDir);
+    sedSeg{ii} = createSEDsegmentation(cell2mat(volume(ii)), workingDir);
+end
+clearvars volume
+toc
+
+%% creating the Sobel segmentation of SED segmentation.
+tic
+disp('evaluating Sobel segmantation on SED segmantations...');
+for ii=1:length(items)
+    itemFolderName = strsplit(strjoin(items(ii)),'.');
+    workingDir = fullfile(rootDir,itemFolderName(1));
+    workingDir = strjoin(workingDir);
+    sobelOnSEDseg{ii} = sobelOnSED(cell2mat(sedSeg(ii)), workingDir);
+end
+clearvars sedSeg
+toc
+
+%% get 1 slide ground truth segmentation
+tic
+disp('getting 1 slide ground truth segmentation...');
+for ii=1:length(items)
+    itemFolderName = strsplit(strjoin(items(ii)),'.');
+    workingDir = fullfile(rootDir,itemFolderName(1));
+    workingDir = strjoin(workingDir);
+   [ GT_slides{ii},startFrame{ii},endFrame{ii}] = getOneSlideGroundTruth(strjoin(items(ii)), GTframe(ii) , workingDir);
+end
+toc
+
+
 
