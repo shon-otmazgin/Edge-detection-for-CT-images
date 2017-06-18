@@ -59,5 +59,31 @@ for ii=1:length(items)
 end
 toc
 
+%% trace the Liver for final segmentation
+tic
+disp('starting final segmentation...');
+for ii=1:length(items)
+    itemFolderName = strsplit(strjoin(items(ii)),'.');
+    workingDir = fullfile(rootDir,itemFolderName(1));
+    workingDir = strjoin(workingDir);
+    finalSeg{ii} = traceLiver( cell2mat(sobelOnSEDseg(ii)) ,cell2mat(GT_slides(ii)), cell2mat(startFrame(ii)), cell2mat(endFrame(ii)), GTframe(ii) ,workingDir );
+end
+clearvars sobelOnSEDseg
+toc
 
+%% saving the result
+tic
+disp('saving segmentation...');
+for ii=1:length(items)
+    itemFolderName = strsplit(strjoin(items(ii)),'.');
+    workingDir = fullfile(rootDir,itemFolderName(1));
+    workingDir = strjoin(workingDir);
+    filename = strcat(strjoin(itemFolderName(1)) , '_58_result.nii.gz');
+    fullname = fullfile(workingDir, filename);
+
+    CTscan = load_untouch_nii_gzip(strjoin(items(ii)));
+    CTscan.img = cell2mat(finalSeg(ii));
+    save_untouch_nii_gzip(CTscan, fullname);
+end
+toc
 
