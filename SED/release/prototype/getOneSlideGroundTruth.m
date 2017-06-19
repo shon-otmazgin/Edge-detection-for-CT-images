@@ -1,6 +1,7 @@
 function [ slide , startFrame, endFrame ] = getOneSlideGroundTruth( scan_name, slideNumber , folder )
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
+% the function is geting liver segmentation name and serach it on MATLAB paths.
+% once it found it start to search for the begging og the segmantation
+% save the wanted ground truth segmentation and return it.
 
     workingDir = folder;
     workingDir = fullfile(workingDir,'GroundTruth');

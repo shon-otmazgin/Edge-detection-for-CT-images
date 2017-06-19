@@ -1,4 +1,7 @@
 function [ finalSeg ] = traceLiver( segMat ,slide ,stratFrame, endFrame, GTframe, folder )
+%the function getting the sobel seg matrix, start frame number segmentation
+% end frame numer segmentation, ground truth silde and floder.
+% for each slide in the sobel segmentation it calculate the active contour using the slide as a mask
 
     workingDir = folder;
     workingDir = fullfile(workingDir,'SobelOnSED');

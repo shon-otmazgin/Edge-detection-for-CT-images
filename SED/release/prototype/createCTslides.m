@@ -1,5 +1,5 @@
 function [ ] = createCTslides(volume,scan_name, folder)
-%   the function is getting CT scan name and serach it on 'Volumes' folder.
+%   the function is getting CT scan name and serach it on MATLAB paths.
 %   once the scan it found, the function create slides from the scan and
 %   save the slides on the curent folder under 'slides' folder.
     

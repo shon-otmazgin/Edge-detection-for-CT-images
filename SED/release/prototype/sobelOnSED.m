@@ -1,7 +1,7 @@
 function [ sobelOnSEDseg ] = createSEDsegmentation( sedSeg ,folder )
-%UNTITLED3 Summary of this function goes here
-%   Detailed explanation goes here
 %% evaluate Sobel algoritem on the SED slides
+% the function getting the SED seg matrix and dest folder.
+% for each slide in the matrix it calculate the Sobel segmentation and return the new sobel matrix.
 
     workingDir = folder;
     workingDir = fullfile(workingDir,'SED');
